@@ -20,8 +20,8 @@
           <br />
           <button class="btn btn-success btn-large btn-block" ng-click="toastIt('success', 'Tasty :p')">Tasty snack</button>
           <button class="btn btn-danger btn-large btn-block" ng-click="toastIt('error', 'Dangerous :(')">Danger snack</button>
-          <button class="btn btn-default btn-large btn-block" ng-click="toastIt('notice', 'Basic :|')">Basic snack</button>
-          <br />
+          <button class="btn btn-default btn-large btn-block" ng-click="toastIt('notice', 'Basic :| (NOTE: Color customized via snackbarProvider)')">Basic snack</button>
+          <br /
           <div class="form-group">
             <select class="form-control" ng-model="position" ng-options="k as v for (k, v) in positions">
             </select>
@@ -33,6 +33,11 @@
     <script src="dist/chSnackbar.js"></script>
     <script>
       angular.module('ch.Demo', ['ch.Snackbar'])
+      .config(function(snackbarProvider) {
+        snackbarProvider.setColors({
+          notice: '#428bca'
+        });
+      })
       .controller('chDemoController', function($scope, snackbar, POSITIONS) {
         $scope.positions = POSITIONS;
         $scope.position = POSITIONS.BOTTOM_LEFT;
