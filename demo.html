@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>chSnackbar Demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/snackbar.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container" ng-app="ch.Demo" ng-controller="chDemoController">
+      <div class="row">
+        <div class="col-xs-12">
+          <br />
+          <br />
+          <br />
+          <br />
+          <button class="btn btn-success btn-large btn-block" ng-click="toastIt('success', 'Tasty :p')">Tasty snack</button>
+          <button class="btn btn-danger btn-large btn-block" ng-click="toastIt('error', 'Dangerous :(')">Danger snack</button>
+          <button class="btn btn-default btn-large btn-block" ng-click="toastIt('notice', 'Basic :|')">Basic snack</button>
+          <br />
+          <div class="form-group">
+            <select class="form-control" ng-model="position" ng-options="k as v for (k, v) in positions">
+            </select>
+          </div>
+      </div>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="dist/chSnackbar.js"></script>
+    <script>
+      angular.module('ch.Demo', ['ch.Snackbar'])
+      .controller('chDemoController', function($scope, snackbar, POSITIONS) {
+        $scope.positions = POSITIONS;
+        $scope.position = POSITIONS.BOTTOM_LEFT;
+        $scope.toastIt = function(type, message) {
+          snackbar[type](message, $scope.position);
+        };
+      });
+    </script>
+  </body>
+</html>
