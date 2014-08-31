@@ -60,7 +60,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
 
     return {
       setColors: setColors,
-      $get: snackbarFactory
+      $get: definitions
     };
 
     function setColors(config) {

@@ -27,7 +27,7 @@
 
     return {
       setColors: setColors,
-      $get: snackbarFactory
+      $get: definitions
     };
 
     function setColors(config) {

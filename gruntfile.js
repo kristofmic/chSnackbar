@@ -14,9 +14,9 @@ function gruntConfig(grunt) {
     watch: require('./grunt/watch'),
     uglify: require('./grunt/uglify'),
     ngtemplates: require('./grunt/ngtemplates'),
-    sass: require('./grunt/sass')
+    sass: require('./grunt/sass'),
     //bgShell: require('./grunt/bgShell'),
-    //karma: require('./grunt/karma'),
+    karma: require('./grunt/karma')
   });
 
   for (var task in pkg.devDependencies) {
@@ -34,11 +34,11 @@ function gruntConfig(grunt) {
     'build:dev',
     'uglify',
   ]);
-  grunt.registerTask('protractor', ['bgShell:protractor']);
+  //grunt.registerTask('protractor', ['bgShell:protractor']);
   grunt.registerTask('test:dev', [
     'build:dev',
-    'karma:dev',
-    'protractor'
+    'karma:dev'
+    //'protractor'
   ]);
   grunt.registerTask('default', [
     'build:dist'
