@@ -26,6 +26,9 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       BOTTOM_RIGHT: 'BOTTOM_RIGHT',
       TOP_RIGHT: 'TOP_RIGHT',
       BOTTOM_LEFT: 'BOTTOM_LEFT'
+    })
+    .constant('SNACKBAR_EVENT', {
+      LOADING: 'LOADING'
     });
 
 })(angular);
@@ -56,6 +59,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       '$timeout',
       '$animate',
       'POSITIONS',
+      'SNACKBAR_EVENT',
       snackbarFactory
     ];
 
@@ -70,7 +74,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       colors.notice = config.notice || colors.notice;
     }
 
-    function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS) {
+    function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS, SNACKBAR_EVENT) {
       var
         templateUrl = 'snackbar.html',
         template = $templateCache.get(templateUrl),
@@ -89,6 +93,8 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
         TOP_RIGHT: 'snackbar-top-right',
         BOTTOM_LEFT: 'snackbar-bottom-left'
       };
+
+      $rootScope.$on(SNACKBAR_EVENT.LOADING, displayLoading);
 
       return {
         success: success,
@@ -222,9 +228,40 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
           return (config.timeout || config.timeout === false) ? config.timeout : POP_OUT_TIMEOUT;
         }
       }
+
+      function displayLoading() {
+        loading('Processing. Please wait.');
+      }
     }
   }
 
 
 
+})(angular);
+
+// assets/javascripts/snackbar_interceptor.js
+(function(angular) {
+
+  var
+    definitions;
+
+  definitions = [
+    '$rootScope',
+    'SNACKBAR_EVENT',
+    snackbarInterceptor
+  ];
+
+  angular.module('ch.Snackbar')
+    .factory('snackbarInterceptor', definitions);
+
+  function snackbarInterceptor($rootScope, SNACKBAR_EVENT) {
+    return {
+      request: request
+    };
+
+    function request(config) {
+      $rootScope.$broadcast(SNACKBAR_EVENT.LOADING);
+      return config;
+    }
+  }
 })(angular);

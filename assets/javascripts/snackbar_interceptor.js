@@ -10,7 +10,7 @@
   ];
 
   angular.module('ch.Snackbar')
-    .factory(definitions);
+    .factory('snackbarInterceptor', definitions);
 
   function snackbarInterceptor($rootScope, SNACKBAR_EVENT) {
     return {
