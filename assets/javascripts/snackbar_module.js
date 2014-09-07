@@ -15,7 +15,8 @@
       BOTTOM_LEFT: 'BOTTOM_LEFT'
     })
     .constant('SNACKBAR_EVENT', {
-      LOADING: 'LOADING'
+      LOADING: 'LOADING',
+      COMPLETE: 'COMPLETE'
     });
 
 })(angular);

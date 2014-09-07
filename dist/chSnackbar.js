@@ -28,7 +28,8 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       BOTTOM_LEFT: 'BOTTOM_LEFT'
     })
     .constant('SNACKBAR_EVENT', {
-      LOADING: 'LOADING'
+      LOADING: 'LOADING',
+      COMPLETE: 'COMPLETE'
     });
 
 })(angular);
@@ -256,12 +257,18 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
 
   function snackbarInterceptor($rootScope, SNACKBAR_EVENT) {
     return {
-      request: request
+      request: request,
+      response: response
     };
 
     function request(config) {
       $rootScope.$broadcast(SNACKBAR_EVENT.LOADING);
       return config;
+    }
+
+    function response(res) {
+      $rootScope.$broadcast(SNACKBAR_EVENT.COMPLETE);
+      return res;
     }
   }
 })(angular);
