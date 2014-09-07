@@ -23,7 +23,6 @@
       '$timeout',
       '$animate',
       'POSITIONS',
-      'SNACKBAR_EVENT',
       snackbarFactory
     ];
 
@@ -38,7 +37,7 @@
       colors.notice = config.notice || colors.notice;
     }
 
-    function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS, SNACKBAR_EVENT) {
+    function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS) {
       var
         templateUrl = 'snackbar.html',
         template = $templateCache.get(templateUrl),
@@ -57,9 +56,6 @@
         TOP_RIGHT: 'snackbar-top-right',
         BOTTOM_LEFT: 'snackbar-bottom-left'
       };
-
-      $rootScope.$on(SNACKBAR_EVENT.LOADING, displayLoading);
-      $rootScope.$on(SNACKBAR_EVENT.COMPLETE, removeLoading);
 
       return {
         success: success,
@@ -178,14 +174,6 @@
         function getTimeout() {
           return (config.timeout || config.timeout === false) ? config.timeout : POP_OUT_TIMEOUT;
         }
-      }
-
-      function displayLoading() {
-        loading('Processing. Please wait.');
-      }
-
-      function removeLoading() {
-        loading('Processing. Please wait.');
       }
 
       function clearSnackbars() {

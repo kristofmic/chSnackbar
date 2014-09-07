@@ -26,10 +26,6 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       BOTTOM_RIGHT: 'BOTTOM_RIGHT',
       TOP_RIGHT: 'TOP_RIGHT',
       BOTTOM_LEFT: 'BOTTOM_LEFT'
-    })
-    .constant('SNACKBAR_EVENT', {
-      LOADING: 'LOADING',
-      COMPLETE: 'COMPLETE'
     });
 
 })(angular);
@@ -60,7 +56,6 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       '$timeout',
       '$animate',
       'POSITIONS',
-      'SNACKBAR_EVENT',
       snackbarFactory
     ];
 
@@ -75,7 +70,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       colors.notice = config.notice || colors.notice;
     }
 
-    function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS, SNACKBAR_EVENT) {
+    function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS) {
       var
         templateUrl = 'snackbar.html',
         template = $templateCache.get(templateUrl),
@@ -94,9 +89,6 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
         TOP_RIGHT: 'snackbar-top-right',
         BOTTOM_LEFT: 'snackbar-bottom-left'
       };
-
-      $rootScope.$on(SNACKBAR_EVENT.LOADING, displayLoading);
-      $rootScope.$on(SNACKBAR_EVENT.COMPLETE, removeLoading);
 
       return {
         success: success,
@@ -217,14 +209,6 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
         }
       }
 
-      function displayLoading() {
-        loading('Processing. Please wait.');
-      }
-
-      function removeLoading() {
-        loading('Processing. Please wait.');
-      }
-
       function clearSnackbars() {
         if (stack.length) {
           for(var i = 0, len = stack.length; i < len; i++) {
@@ -247,37 +231,4 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
 
 
 
-})(angular);
-
-// assets/javascripts/snackbar_interceptor.js
-(function(angular) {
-
-  var
-    definitions;
-
-  definitions = [
-    '$rootScope',
-    'SNACKBAR_EVENT',
-    snackbarInterceptor
-  ];
-
-  angular.module('ch.Snackbar')
-    .factory('snackbarInterceptor', definitions);
-
-  function snackbarInterceptor($rootScope, SNACKBAR_EVENT) {
-    return {
-      request: request,
-      response: response
-    };
-
-    function request(config) {
-      $rootScope.$broadcast(SNACKBAR_EVENT.LOADING);
-      return config;
-    }
-
-    function response(res) {
-      $rootScope.$broadcast(SNACKBAR_EVENT.COMPLETE);
-      return res;
-    }
-  }
 })(angular);

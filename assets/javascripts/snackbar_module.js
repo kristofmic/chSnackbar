@@ -13,10 +13,6 @@
       BOTTOM_RIGHT: 'BOTTOM_RIGHT',
       TOP_RIGHT: 'TOP_RIGHT',
       BOTTOM_LEFT: 'BOTTOM_LEFT'
-    })
-    .constant('SNACKBAR_EVENT', {
-      LOADING: 'LOADING',
-      COMPLETE: 'COMPLETE'
     });
 
 })(angular);
