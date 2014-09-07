@@ -96,6 +96,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       };
 
       $rootScope.$on(SNACKBAR_EVENT.LOADING, displayLoading);
+      $rootScope.$on(SNACKBAR_EVENT.COMPLETE, removeLoading);
 
       return {
         success: success,
@@ -160,11 +161,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
 
           snackbar = $compile(template)(scope);
 
-          if (stack.length) {
-            for(var i = 0, len = stack.length; i < len; i++) {
-              clearSnackbar(stack[i], i);
-            }
-          }
+          clearSnackbars();
 
           insertSnackbar();
           if (timeout) {
@@ -197,16 +194,6 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
             .removeClass(POP_UP);
         }
 
-        function clearSnackbar(item, index) {
-          if (item.timeout) {
-            $timeout.cancel(item.timeout.pop_out);
-            $timeout.cancel(item.timeout.remove);
-          }
-
-          $animate.leave(item);
-          stack.splice(index, 1);
-        }
-
         function getStyles() {
           return {
             wrapper: {
@@ -232,6 +219,28 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
 
       function displayLoading() {
         loading('Processing. Please wait.');
+      }
+
+      function removeLoading() {
+        loading('Processing. Please wait.');
+      }
+
+      function clearSnackbars() {
+        if (stack.length) {
+          for(var i = 0, len = stack.length; i < len; i++) {
+            clearSnackbar(stack[i], i);
+          }
+        }
+
+        function clearSnackbar(item, index) {
+          if (item.timeout) {
+            $timeout.cancel(item.timeout.pop_out);
+            $timeout.cancel(item.timeout.remove);
+          }
+
+          $animate.leave(item);
+          stack.splice(index, 1);
+        }
       }
     }
   }

@@ -16,7 +16,8 @@ describe('snackbar', function() {
 
   beforeEach(module(function($provide) {
     mockRootScope = {
-      $new: sinon.stub()
+      $new: sinon.stub(),
+      $on: sinon.stub()
     };
     mockRootScope.$new.returns(mockScope);
 

@@ -59,6 +59,7 @@
       };
 
       $rootScope.$on(SNACKBAR_EVENT.LOADING, displayLoading);
+      $rootScope.$on(SNACKBAR_EVENT.COMPLETE, removeLoading);
 
       return {
         success: success,
@@ -123,11 +124,7 @@
 
           snackbar = $compile(template)(scope);
 
-          if (stack.length) {
-            for(var i = 0, len = stack.length; i < len; i++) {
-              clearSnackbar(stack[i], i);
-            }
-          }
+          clearSnackbars();
 
           insertSnackbar();
           if (timeout) {
@@ -160,16 +157,6 @@
             .removeClass(POP_UP);
         }
 
-        function clearSnackbar(item, index) {
-          if (item.timeout) {
-            $timeout.cancel(item.timeout.pop_out);
-            $timeout.cancel(item.timeout.remove);
-          }
-
-          $animate.leave(item);
-          stack.splice(index, 1);
-        }
-
         function getStyles() {
           return {
             wrapper: {
@@ -195,6 +182,28 @@
 
       function displayLoading() {
         loading('Processing. Please wait.');
+      }
+
+      function removeLoading() {
+        loading('Processing. Please wait.');
+      }
+
+      function clearSnackbars() {
+        if (stack.length) {
+          for(var i = 0, len = stack.length; i < len; i++) {
+            clearSnackbar(stack[i], i);
+          }
+        }
+
+        function clearSnackbar(item, index) {
+          if (item.timeout) {
+            $timeout.cancel(item.timeout.pop_out);
+            $timeout.cancel(item.timeout.remove);
+          }
+
+          $animate.leave(item);
+          stack.splice(index, 1);
+        }
       }
     }
   }
