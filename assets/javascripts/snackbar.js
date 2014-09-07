@@ -61,7 +61,8 @@
         success: success,
         error: error,
         notice: notice,
-        loading: loading
+        loading: loading,
+        clear: clear
       };
 
       function success(message, pos) {
@@ -120,7 +121,7 @@
 
           snackbar = $compile(template)(scope);
 
-          clearSnackbars();
+          clear();
 
           insertSnackbar();
           if (timeout) {
@@ -176,7 +177,7 @@
         }
       }
 
-      function clearSnackbars() {
+      function clear() {
         if (stack.length) {
           for(var i = 0, len = stack.length; i < len; i++) {
             clearSnackbar(stack[i], i);

@@ -27,6 +27,7 @@ describe('snackbar', function() {
     };
 
     mockTimeout = sinon.spy();
+    mockTimeout.cancel = sinon.spy();
 
     mockDocument = {
       find: sinon.spy()
@@ -171,6 +172,19 @@ describe('snackbar', function() {
       });
     });
 
+  });
+
+  describe('clear()', function() {
+    beforeEach(function() {
+      snackbar.notice('Foobar');
+    });
+
+    it('should clear the snackbars on the stack', function() {
+      snackbar.clear();
+
+      expect(mockTimeout.cancel.callCount).to.equal(2);
+      expect(mockAnimate.leave.callCount).to.equal(1);
+    });
   });
 
 });

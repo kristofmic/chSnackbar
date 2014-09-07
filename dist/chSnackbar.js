@@ -94,7 +94,8 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
         success: success,
         error: error,
         notice: notice,
-        loading: loading
+        loading: loading,
+        clear: clear
       };
 
       function success(message, pos) {
@@ -153,7 +154,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
 
           snackbar = $compile(template)(scope);
 
-          clearSnackbars();
+          clear();
 
           insertSnackbar();
           if (timeout) {
@@ -209,7 +210,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
         }
       }
 
-      function clearSnackbars() {
+      function clear() {
         if (stack.length) {
           for(var i = 0, len = stack.length; i < len; i++) {
             clearSnackbar(stack[i], i);
