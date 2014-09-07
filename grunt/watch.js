@@ -12,5 +12,12 @@ module.exports = {
     options: {
 
     }
+  },
+  css: {
+    files: ['<%= cssPath %>/**/*.scss'],
+    tasks: ['sass'],
+    options: {
+
+    }
   }
 };

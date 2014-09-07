@@ -4,7 +4,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
   'use strict';
 
   $templateCache.put('snackbar.html',
-    "<div class=\"snackbar\" role=\"alert\" ng-style=\"styles.wrapper\" ng-class=\"position\"><p class=\"snackbar-message\" ng-style=\"styles.message\">{{message}}</p></div>"
+    "<div class=\"snackbar\" role=\"alert\" ng-style=\"styles.wrapper\" ng-class=\"position\"><div class=\"spinner\" ng-if=\"loading\"><div class=\"bounce1\" ng-style=\"{'background-color':styles.message.color}\"></div><div class=\"bounce2\" ng-style=\"{'background-color':styles.message.color}\"></div><div class=\"bounce3\" ng-style=\"{'background-color':styles.message.color}\"></div></div><p class=\"snackbar-message\" ng-style=\"styles.message\">{{message}}</p></div>"
   );
 
 }]);
@@ -44,7 +44,8 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
     colors = {
       success: '#5cb85c',
       error: '#d9534f',
-      notice: '#333'
+      notice: '#333',
+      loading: '#428bca'
     };
 
     definitions = [
@@ -75,10 +76,10 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
         template = $templateCache.get(templateUrl),
         scope = $rootScope.$new(),
         body = $document.find('body'),
+        POP_OUT_TIMEOUT = 4000,
+        REMOVE_TIMEOUT = 200,
         POP_UP = 'snackbar-pop-up',
         POP_OUT = 'snackbar-pop-out',
-        POP_OUT_TIMEOUT = 4000,
-        REMOVE_TIMEOUT = 4200,
         POSITION_CLASSES,
         stack = [];
 
@@ -92,7 +93,8 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
       return {
         success: success,
         error: error,
-        notice: notice
+        notice: notice,
+        loading: loading
       };
 
       function success(message, pos) {
@@ -117,21 +119,37 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
         notice(message, pos, errorConfig);
       }
 
+      function loading(message, pos) {
+        var
+          loadingConfig;
+
+        loadingConfig = {
+          'background-color': colors.loading,
+          'timeout': false,
+          'loading': true
+        };
+
+        notice(message, pos, loadingConfig);
+      }
+
       function notice(message, pos, config) {
         var
           snackbar,
           styles,
-          position;
+          position,
+          timeout;
 
         config = config || {};
 
         if (message) {
           styles = getStyles();
           position = getPosition();
+          timeout = getTimeout();
 
           scope.message = message;
           scope.styles = styles;
           scope.position = position;
+          scope.loading = config.loading;
 
           snackbar = $compile(template)(scope);
 
@@ -142,10 +160,12 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
           }
 
           insertSnackbar();
-          snackbar.timeout = {
-            pop_out: $timeout(snackbarPopOut, POP_OUT_TIMEOUT),
-            remove: $timeout(removeSnackbar, REMOVE_TIMEOUT)
-          };
+          if (timeout) {
+            snackbar.timeout = {
+              pop_out: $timeout(snackbarPopOut, timeout),
+              remove: $timeout(removeSnackbar, timeout + REMOVE_TIMEOUT)
+            };
+          }
         }
 
         function insertSnackbar() {
@@ -171,8 +191,11 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
         }
 
         function clearSnackbar(item, index) {
-          $timeout.cancel(item.timeout.pop_out);
-          $timeout.cancel(item.timeout.remove);
+          if (item.timeout) {
+            $timeout.cancel(item.timeout.pop_out);
+            $timeout.cancel(item.timeout.remove);
+          }
+
           $animate.leave(item);
           stack.splice(index, 1);
         }
@@ -193,6 +216,10 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
             position = POSITIONS[pos];
 
           return position ? POSITION_CLASSES[position] : POSITION_CLASSES.BOTTOM_LEFT;
+        }
+
+        function getTimeout() {
+          return (config.timeout || config.timeout === false) ? config.timeout : POP_OUT_TIMEOUT;
         }
       }
     }

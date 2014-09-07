@@ -106,6 +106,31 @@ describe('snackbar', function() {
     });
   });
 
+  describe('loading()', function() {
+    var
+      message = 'loading...';
+
+    beforeEach(function() {
+      snackbar.loading(message);
+    });
+
+    it('should set the message on the scope', function() {
+      expect(mockScope.message).to.equal(message);
+    });
+
+    it('should default color to blue', function() {
+      expect(mockScope.styles.wrapper['background-color']).to.equal('#428bca');
+    });
+
+    it('should not set a timeout', function() {
+      expect(mockTimeout.called).to.be.false;
+    });
+
+    it('should set loading on scope to true', function() {
+      expect(mockScope.loading).to.be.true;
+    });
+  });
+
   describe('notice()', function() {
     var
       message = 'foobar!';
