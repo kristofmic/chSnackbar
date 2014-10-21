@@ -58,6 +58,8 @@
         BOTTOM_LEFT: 'snackbar-bottom-left'
       };
 
+      scope.dismiss = clear;
+
       return {
         success: success,
         error: error,

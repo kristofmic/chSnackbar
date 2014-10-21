@@ -32,7 +32,7 @@ function gruntConfig(grunt) {
   ]);
   grunt.registerTask('build:dist', [
     'build:dev',
-    'uglify',
+    'uglify'
   ]);
   //grunt.registerTask('protractor', ['bgShell:protractor']);
   grunt.registerTask('test:dev', [
