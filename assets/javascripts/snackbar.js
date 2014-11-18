@@ -21,7 +21,6 @@
       '$templateCache',
       '$compile',
       '$timeout',
-      '$animate',
       'POSITIONS',
       snackbarFactory
     ];
@@ -38,12 +37,12 @@
       colors.loading = config.loading || colors.loading;
     }
 
-    function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS) {
+    function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, POSITIONS) {
       var
         templateUrl = 'snackbar.html',
         template = $templateCache.get(templateUrl),
         scope = $rootScope.$new(),
-        body = $document.find('body'),
+        $body = angular.element($document[0].body),
         POP_OUT_TIMEOUT = 4000,
         REMOVE_TIMEOUT = 200,
         POP_UP = 'snackbar-pop-up',
@@ -136,12 +135,13 @@
         }
 
         function insertSnackbar() {
-          $animate.enter(snackbar, body, null, snackbarPopIn);
+          $body.append(snackbar);
+          snackbarPopIn();
           stack.push(snackbar);
         }
 
         function removeSnackbar() {
-          $animate.leave(snackbar);
+          snackbar.remove();
           stack.shift();
         }
 
@@ -193,7 +193,7 @@
             $timeout.cancel(item.timeout.remove);
           }
 
-          $animate.leave(item);
+          item.remove();
           stack.splice(index, 1);
         }
       }
