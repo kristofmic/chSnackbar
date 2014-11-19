@@ -186,4 +186,71 @@
     font-size: 14px;
     font-weight: 300;
   }
+
+  @media (max-width: 768px) {
+    &.snackbar-bottom-left, &.snackbar-bottom-right, &.snackbar-top-left, &.snackbar-top-right {
+      left: 0;
+      right: 0;
+    }
+
+    &.snackbar-bottom-left, &.snackbar-bottom-right {
+      -webkit-transform: translate3d(0,0,0);
+      -moz-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+
+      &.ng-enter {
+        -webkit-transform: translate3d(0,24px,0);
+        -moz-transform: translate3d(0,24px,0);
+        transform: translate3d(0,24px,0);
+
+        &.ng-enter-active {
+          -webkit-transform: translate3d(0,0,0);
+          -moz-transform: translate3d(0,0,0);
+          transform: translate3d(0,0,0);
+        }
+      }
+      &.ng-leave {
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        &.ng-leave-active {
+          -webkit-transform: translate3d(0,0,0);
+          -moz-transform: translate3d(0,0,0);
+          transform: translate3d(0,0,0);
+        }
+      }
+    }
+    &.snackbar-top-left, &.snackbar-top-right {
+      -webkit-transform: translate3d(0,0,0);
+      -moz-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+
+      &.ng-enter {
+        -webkit-transform: translate3d(0,-24px,0);
+        -moz-transform: translate3d(0,-24px,0);
+        transform: translate3d(0,-24px,0);
+
+        &.ng-enter-active {
+          -webkit-transform: translate3d(0,0,0);
+          -moz-transform: translate3d(0,0,0);
+          transform: translate3d(0,0,0);
+        }
+      }
+      &.ng-leave {
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        &.ng-leave-active {
+          -webkit-transform: translate3d(0,0,0);
+          -moz-transform: translate3d(0,0,0);
+          transform: translate3d(0,0,0);
+        }
+      }
+    }
+
+    .snackbar-message {
+      white-space: initial;
+    }
+
+  }
 }
