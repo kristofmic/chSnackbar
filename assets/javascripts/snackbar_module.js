@@ -4,6 +4,7 @@
     dependencies;
 
   dependencies = [
+    'ngAnimate',
     'ch.Snackbar.Templates'
   ];
 

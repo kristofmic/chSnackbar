@@ -13,6 +13,8 @@ module.exports = function(config) {
     files: [
         '../assets/components/angular/angular.js',
 
+        '../assets/components/angular-animate/angular-animate.js',
+
         '../assets/components/angular-mocks/angular-mocks.js',
 
         '../dist/chSnackbar.js',

@@ -15,6 +15,8 @@ describe('snackbar', function() {
   beforeEach(module('ch.Snackbar'));
 
   beforeEach(module(function($provide) {
+    mockSnackbar.remove = sinon.spy();
+
     mockRootScope = {
       $new: sinon.stub(),
       $on: sinon.stub()
@@ -29,9 +31,11 @@ describe('snackbar', function() {
     mockTimeout = sinon.spy();
     mockTimeout.cancel = sinon.spy();
 
-    mockDocument = {
-      find: sinon.spy()
-    };
+    mockDocument = [
+      {
+        body: {}
+      }
+    ];
 
     compileStub = sinon.stub();
     compileStub.returns(mockSnackbar);
@@ -66,10 +70,6 @@ describe('snackbar', function() {
 
     it('should create a new scope', function() {
       expect(mockRootScope.$new).to.have.been.called;
-    });
-
-    it('should find the body from the document', function() {
-      expect(mockDocument.find.calledWith('body')).to.be.true
     });
   });
 
@@ -127,10 +127,6 @@ describe('snackbar', function() {
     it('should not set a timeout', function() {
       expect(mockTimeout.called).to.be.false;
     });
-
-    it('should set loading on scope to true', function() {
-      expect(mockScope.loading).to.be.true;
-    });
   });
 
   describe('notice()', function() {
@@ -182,8 +178,8 @@ describe('snackbar', function() {
     it('should clear the snackbars on the stack', function() {
       snackbar.clear();
 
-      expect(mockTimeout.cancel.callCount).to.equal(2);
-      expect(mockAnimate.leave.callCount).to.equal(1);
+      expect(mockTimeout.cancel.called).to.be.true;
+      expect(mockSnackbar.remove.called).to.be.true;
     });
   });
 

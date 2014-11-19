@@ -1,63 +1,97 @@
 .snackbar {
-  z-index: 9999;
+  z-index: 2999;
   position: fixed;
   padding: 15px;
   min-width: 288px;
-  max-width: 568px;
+  max-width: 768px;
   overflow: hidden;
-  opacity: 0;
   white-space: nowrap;
-  transition: 200ms ease-in-out all;
-  -webkit-transition: 200ms ease-in-out all;
-  -moz-transition: 200ms ease-in-out all;
-  -ms-transition: 200ms ease-in-out all;
-  -o-transition: 200ms ease-in-out all;
+  transition: .2s ease-out opacity, .1s ease-out bottom, .1s ease-out top;
+  -webkit-transition: .2s ease-out opacity, .1s ease-out bottom, .1s ease-out top;
+  -moz-transition: .2s ease-out opacity, .1s ease-out bottom, .1s ease-out top;
+
+  &.ng-enter {
+    opacity: 0;
+    &.ng-enter-active {
+      opacity: 1;
+    }
+  }
+  &.ng-leave {
+    opacity: 1;
+    &.ng-leave-active {
+      opacity: 0;
+    }
+  }
 
   &.snackbar-bottom-left {
-    bottom: 0;
     left: 24px;
+    bottom: 24px;
+
+    &.ng-enter {
+      bottom: -24px;
+      &.ng-enter-active {
+        bottom: 24px;
+      }
+    }
+    &.ng-leave {
+      bottom: 24px;
+      &.ng-leave-active {
+        bottom: 24px;
+      }
+    }
   }
 
   &.snackbar-bottom-right {
-    bottom: 0;
     right: 24px;
-  }
+    bottom: 24px;
 
-  &.snackbar-top-left {
-    top: 0;
-    left: 24px;
+    &.ng-enter {
+      bottom: -24px;
+      &.ng-enter-active {
+        bottom: 24px;
+      }
+    }
+    &.ng-leave {
+      bottom: 24px;
+      &.ng-leave-active {
+        bottom: 24px;
+      }
+    }
   }
 
   &.snackbar-top-right {
-    top: 0;
     right: 24px;
+    top: 24px;
+
+    &.ng-enter {
+      top: 0;
+      &.ng-enter-active {
+        top: 24px;
+      }
+    }
+    &.ng-leave {
+      top: 24px;
+      &.ng-leave-active {
+        top: 24px;
+      }
+    }
   }
 
-  &.snackbar-pop-up {
-    opacity: 1;
+  &.snackbar-top-left {
+    left: 24px;
+    top: 24px;
 
-    &.snackbar-bottom-left,
-    &.snackbar-bottom-right {
-      bottom: 24px;
+    &.ng-enter {
+      top: 0;
+      &.ng-enter-active {
+        top: 24px;
+      }
     }
-
-    &.snackbar-top-left,
-    &.snackbar-top-right {
+    &.ng-leave {
       top: 24px;
-    }
-  }
-
-  &.snackbar-pop-out {
-    opacity: 0;
-
-    &.snackbar-bottom-left,
-    &.snackbar-bottom-right {
-      bottom: 24px;
-    }
-
-    &.snackbar-top-left,
-    &.snackbar-top-right {
-      top: 24px;
+      &.ng-leave-active {
+        top: 24px;
+      }
     }
   }
 
@@ -77,21 +111,17 @@
     filter: alpha(opacity=70);
     opacity: .7;
 
-    transition: 100ms ease-in-out all;
-    -webkit-transition: 100ms ease-in-out all;
-    -moz-transition: 100ms ease-in-out all;
-    -ms-transition: 100ms ease-in-out all;
-    -o-transition: 100ms ease-in-out all;
+    transition: 100ms ease-in-out transform;
+    -webkit-transition: 100ms ease-in-out -webkit-transform;
+    -moz-transition: 100ms ease-in-out -moz-transform;
 
     &:hover {
       filter: alpha(opacity=100);
       opacity: 1;
 
+      transform: scale(1.5, 1.5);
       -webkit-transform: scale(1.5, 1.5);
       -moz-transform: scale(1.5, 1.5);
-      -ms-transform: scale(1.5, 1.5);
-      -o-transform: scale(1.5, 1.5);
-      transform: scale(1.5, 1.5);
     }
   }
 
@@ -103,49 +133,5 @@
     padding: 0;
     font-size: 14px;
     font-weight: 300;
-  }
-}
-
-@media (max-width: 768px) {
-  .snackbar {
-    max-width: 100%;
-    width: 100%;
-    white-space: normal;
-
-    &.snackbar-bottom-left,
-    &.snackbar-bottom-right,
-    &.snackbar-top-left,
-    &.snackbar-top-right {
-      left: 0;
-      right: 0;
-    }
-
-    &.snackbar-pop-up {
-      &.snackbar-bottom-left,
-      &.snackbar-bottom-right {
-        bottom: 0;
-      }
-
-      &.snackbar-top-left,
-      &.snackbar-top-right {
-        top: 0;
-      }
-    }
-
-    &.snackbar-pop-out {
-      &.snackbar-bottom-left,
-      &.snackbar-bottom-right {
-        bottom: 0;
-      }
-
-      &.snackbar-top-left,
-      &.snackbar-top-right {
-        top: 0;
-      }
-    }
-    .snackbar-message {
-      white-space: normal;
-      font-size: 12px;
-    }
   }
 }

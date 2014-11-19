@@ -1,50 +1,89 @@
 .snackbar {
-  z-index: 9999;
+  z-index: 2999;
   position: fixed;
   padding: 15px;
   min-width: 288px;
-  max-width: 568px;
+  max-width: 768px;
   overflow: hidden;
-  opacity: 0;
   white-space: nowrap;
-  transition: 200ms ease-in-out all;
-  -webkit-transition: 200ms ease-in-out all;
-  -moz-transition: 200ms ease-in-out all;
-  -ms-transition: 200ms ease-in-out all;
-  -o-transition: 200ms ease-in-out all;
+  transition: .2s ease-out opacity, .1s ease-out bottom, .1s ease-out top;
+  -webkit-transition: .2s ease-out opacity, .1s ease-out bottom, .1s ease-out top;
+  -moz-transition: .2s ease-out opacity, .1s ease-out bottom, .1s ease-out top;
 }
-.snackbar.snackbar-bottom-left {
-  bottom: 0;
-  left: 24px;
+.snackbar.ng-enter {
+  opacity: 0;
 }
-.snackbar.snackbar-bottom-right {
-  bottom: 0;
-  right: 24px;
-}
-.snackbar.snackbar-top-left {
-  top: 0;
-  left: 24px;
-}
-.snackbar.snackbar-top-right {
-  top: 0;
-  right: 24px;
-}
-.snackbar.snackbar-pop-up {
+.snackbar.ng-enter.ng-enter-active {
   opacity: 1;
 }
-.snackbar.snackbar-pop-up.snackbar-bottom-left, .snackbar.snackbar-pop-up.snackbar-bottom-right {
-  bottom: 24px;
+.snackbar.ng-leave {
+  opacity: 1;
 }
-.snackbar.snackbar-pop-up.snackbar-top-left, .snackbar.snackbar-pop-up.snackbar-top-right {
-  top: 24px;
-}
-.snackbar.snackbar-pop-out {
+.snackbar.ng-leave.ng-leave-active {
   opacity: 0;
 }
-.snackbar.snackbar-pop-out.snackbar-bottom-left, .snackbar.snackbar-pop-out.snackbar-bottom-right {
+.snackbar.snackbar-bottom-left {
+  left: 24px;
   bottom: 24px;
 }
-.snackbar.snackbar-pop-out.snackbar-top-left, .snackbar.snackbar-pop-out.snackbar-top-right {
+.snackbar.snackbar-bottom-left.ng-enter {
+  bottom: -24px;
+}
+.snackbar.snackbar-bottom-left.ng-enter.ng-enter-active {
+  bottom: 24px;
+}
+.snackbar.snackbar-bottom-left.ng-leave {
+  bottom: 24px;
+}
+.snackbar.snackbar-bottom-left.ng-leave.ng-leave-active {
+  bottom: 24px;
+}
+.snackbar.snackbar-bottom-right {
+  right: 24px;
+  bottom: 24px;
+}
+.snackbar.snackbar-bottom-right.ng-enter {
+  bottom: -24px;
+}
+.snackbar.snackbar-bottom-right.ng-enter.ng-enter-active {
+  bottom: 24px;
+}
+.snackbar.snackbar-bottom-right.ng-leave {
+  bottom: 24px;
+}
+.snackbar.snackbar-bottom-right.ng-leave.ng-leave-active {
+  bottom: 24px;
+}
+.snackbar.snackbar-top-right {
+  right: 24px;
+  top: 24px;
+}
+.snackbar.snackbar-top-right.ng-enter {
+  top: 0;
+}
+.snackbar.snackbar-top-right.ng-enter.ng-enter-active {
+  top: 24px;
+}
+.snackbar.snackbar-top-right.ng-leave {
+  top: 24px;
+}
+.snackbar.snackbar-top-right.ng-leave.ng-leave-active {
+  top: 24px;
+}
+.snackbar.snackbar-top-left {
+  left: 24px;
+  top: 24px;
+}
+.snackbar.snackbar-top-left.ng-enter {
+  top: 0;
+}
+.snackbar.snackbar-top-left.ng-enter.ng-enter-active {
+  top: 24px;
+}
+.snackbar.snackbar-top-left.ng-leave {
+  top: 24px;
+}
+.snackbar.snackbar-top-left.ng-leave.ng-leave-active {
   top: 24px;
 }
 .snackbar button.dismiss {
@@ -62,20 +101,16 @@
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25882);
   filter: alpha(opacity=70);
   opacity: .7;
-  transition: 100ms ease-in-out all;
-  -webkit-transition: 100ms ease-in-out all;
-  -moz-transition: 100ms ease-in-out all;
-  -ms-transition: 100ms ease-in-out all;
-  -o-transition: 100ms ease-in-out all;
+  transition: 100ms ease-in-out transform;
+  -webkit-transition: 100ms ease-in-out -webkit-transform;
+  -moz-transition: 100ms ease-in-out -moz-transform;
 }
 .snackbar button.dismiss:hover {
   filter: alpha(opacity=100);
   opacity: 1;
+  transform: scale(1.5, 1.5);
   -webkit-transform: scale(1.5, 1.5);
   -moz-transform: scale(1.5, 1.5);
-  -ms-transform: scale(1.5, 1.5);
-  -o-transform: scale(1.5, 1.5);
-  transform: scale(1.5, 1.5);
 }
 .snackbar .snackbar-message {
   text-overflow: ellipsis;
@@ -85,34 +120,6 @@
   padding: 0;
   font-size: 14px;
   font-weight: 300;
-}
-
-@media (max-width: 768px) {
-  .snackbar {
-    max-width: 100%;
-    width: 100%;
-    white-space: normal;
-  }
-  .snackbar.snackbar-bottom-left, .snackbar.snackbar-bottom-right, .snackbar.snackbar-top-left, .snackbar.snackbar-top-right {
-    left: 0;
-    right: 0;
-  }
-  .snackbar.snackbar-pop-up.snackbar-bottom-left, .snackbar.snackbar-pop-up.snackbar-bottom-right {
-    bottom: 0;
-  }
-  .snackbar.snackbar-pop-up.snackbar-top-left, .snackbar.snackbar-pop-up.snackbar-top-right {
-    top: 0;
-  }
-  .snackbar.snackbar-pop-out.snackbar-bottom-left, .snackbar.snackbar-pop-out.snackbar-bottom-right {
-    bottom: 0;
-  }
-  .snackbar.snackbar-pop-out.snackbar-top-left, .snackbar.snackbar-pop-out.snackbar-top-right {
-    top: 0;
-  }
-  .snackbar .snackbar-message {
-    white-space: normal;
-    font-size: 12px;
-  }
 }
 
 /*# sourceMappingURL=snackbar.css.map */
