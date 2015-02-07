@@ -37,7 +37,10 @@
       angular.module('ch.Demo', ['ch.Snackbar'])
       .config(function(snackbarProvider) {
         snackbarProvider.setColors({
-          notice: '#428bca'
+          notice: '#AAA'
+        });
+        snackbarProvider.setCloseIcon({
+          className: 'glyphicon glyphicon-ok'
         });
       })
       .controller('chDemoController', function($scope, snackbar, POSITIONS) {

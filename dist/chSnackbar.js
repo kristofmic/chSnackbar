@@ -4,7 +4,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
   'use strict';
 
   $templateCache.put('snackbar.html',
-    "<div class=\"snackbar\" role=\"alert\" ng-style=\"styles.wrapper\" ng-class=\"position\"><button type=\"button\" class=\"dismiss\" ng-click=\"dismiss()\"><span aria-hidden=\"true\">&times;</span> <span class=\"sr-only\">Close</span></button><p class=\"snackbar-message\" ng-style=\"styles.message\">{{message}}</p></div>"
+    "<div class=\"snackbar\" role=\"alert\" ng-style=\"styles.wrapper\" ng-class=\"position\"><button type=\"button\" class=\"dismiss\" ng-click=\"dismiss()\"><i ng-if=\"!styles.closeIcon.className\" aria-hidden=\"true\">&times;</i> <i ng-if=\"styles.closeIcon.className\" class=\"{{styles.closeIcon.className}}\"></i> <span class=\"sr-only\">Close</span></button><p class=\"snackbar-message\" ng-style=\"styles.message\">{{message}}</p></div>"
   );
 
 }]);
@@ -40,6 +40,7 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
   function snackbarProvider() {
     var
       colors,
+      closeIcon,
       definitions;
 
     colors = {
@@ -62,14 +63,22 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
 
     return {
       setColors: setColors,
+      setCloseIcon: setCloseIcon,
       $get: definitions
     };
 
     function setColors(config) {
+      config = config || {};
       colors.success = config.success || colors.success;
       colors.error = config.error || colors.error;
       colors.notice = config.notice || colors.notice;
       colors.loading = config.loading || colors.loading;
+    }
+
+    function setCloseIcon(config) {
+      config = config || {};
+
+      closeIcon = config;
     }
 
     function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS) {
@@ -181,6 +190,9 @@ angular.module('ch.Snackbar.Templates', []).run(['$templateCache', function($tem
             },
             message: {
               color: config.color || '#FFF'
+            },
+            closeIcon: {
+              className: closeIcon.className
             }
           };
         }

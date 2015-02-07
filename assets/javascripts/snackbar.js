@@ -6,6 +6,7 @@
   function snackbarProvider() {
     var
       colors,
+      closeIcon,
       definitions;
 
     colors = {
@@ -28,14 +29,22 @@
 
     return {
       setColors: setColors,
+      setCloseIcon: setCloseIcon,
       $get: definitions
     };
 
     function setColors(config) {
+      config = config || {};
       colors.success = config.success || colors.success;
       colors.error = config.error || colors.error;
       colors.notice = config.notice || colors.notice;
       colors.loading = config.loading || colors.loading;
+    }
+
+    function setCloseIcon(config) {
+      config = config || {};
+
+      closeIcon = config;
     }
 
     function snackbarFactory($document, $rootScope, $templateCache, $compile, $timeout, $animate, POSITIONS) {
@@ -147,6 +156,9 @@
             },
             message: {
               color: config.color || '#FFF'
+            },
+            closeIcon: {
+              className: closeIcon.className
             }
           };
         }

@@ -1,6 +1,7 @@
 <div class="snackbar" role="alert" ng-style="styles.wrapper" ng-class="position">
   <button type="button" class="dismiss" ng-click="dismiss()">
-    <span aria-hidden="true">&times;</span>
+    <i ng-if="!styles.closeIcon.className" aria-hidden="true">&times;</i>
+    <i ng-if="styles.closeIcon.className" class="{{styles.closeIcon.className}}"></i>
     <span class="sr-only">Close</span>
   </button>
 
